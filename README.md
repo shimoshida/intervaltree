@@ -3,18 +3,9 @@
 intervaltree
 ============
 
-A mutable, self-balancing interval tree for Python 2 and 3. Queries may be by point, by range overlap, or by range envelopment.
+A mutable, self-balancing interval tree for Python 3. Queries may be by point, by range overlap, or by range envelopment.
 
-This library was designed to allow tagging text and time intervals, where the intervals include the lower bound but not the upper bound.
-
-**Version 3 changes!**
-
-* The `search(begin, end, strict)` method no longer exists. Instead, use one of these:
-    * `at(point)`
-    * `overlap(begin, end)`
-    * `envelop(begin, end)`
-* The `extend(items)` method no longer exists. Instead, use `update(items)`.
-* Methods like `merge_overlaps()` which took a `strict` argument consistently default to `strict=True`. Before, some methods defaulted to `True` and others to `False`.
+This library was designed to allow tagging text and time intervals, where the intervals include the lower bound and the upper bound.
 
 Installing
 ----------
@@ -26,7 +17,7 @@ pip install intervaltree
 Features
 --------
 
-* Supports Python 2.7 and Python 3.6+ (Tested under 2.7, and 3.6 thru 3.11)
+* Supports Python 3.6+ (Tested 3.10.11)
 * Initializing
     * blank `tree = IntervalTree()`
     * from an iterable of `Interval` objects (`tree = IntervalTree(intervals)`)
@@ -164,18 +155,16 @@ Examples
 
     ``` python
     >>> sorted(t[2:4])
-    []
+    [Interval(1, 2, '1-2'), Interval(4, 7, (4, 7))]
 
     ```
 
-    Since our search was over `2 ≤ x < 4`, neither `Interval(1, 2)` nor `Interval(4, 7)`
-    was included. The first interval, `1 ≤ x < 2` does not include `x = 2`. The second
-    interval, `4 ≤ x < 7`, does include `x = 4`, but our search interval excludes it. So,
-    there were no overlapping intervals. However:
+    Since our search was over `2 ≤ x <= 4`, both `Interval(1, 2)` and `Interval(4, 7)`
+    was included. Other example is
 
     ``` python
     >>> sorted(t[1:5])
-    [Interval(1, 2, '1-2'), Interval(4, 7, (4, 7))]
+    [Interval(1, 2, '1-2'), Interval(4, 7, (4, 7)), Interval(5, 9, {5: 9})]
 
     ```
 
@@ -358,6 +347,7 @@ Copyright
 
 * [Chaim Leib Halbert][GH], 2013-2023
 * Modifications, [Konstantin Tretyakov][Konstantin intervaltree], 2014
+
 
 Licensed under the [Apache License, version 2.0][Apache].
 

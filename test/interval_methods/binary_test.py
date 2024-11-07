@@ -38,27 +38,28 @@ iv10 = Interval(-5, 0)
 
 def test_interval_overlaps_size_interval():
     assert iv0.overlap_size(iv0) == 10
-    assert not iv0.overlap_size(iv1)
-    assert not iv0.overlap_size(iv2)
+    assert iv0.overlap_size(iv1) == 0  # not overlap
+    assert iv0.overlap_size(iv2) == 0  # overlap at points
     assert iv0.overlap_size(iv3) == 5
     assert iv0.overlap_size(iv4) == 10
     assert iv0.overlap_size(iv5) == 10
     assert iv0.overlap_size(iv6) == 10
     assert iv0.overlap_size(iv7) == 5
-    assert not iv0.overlap_size(iv8)
-    assert not iv0.overlap_size(iv9)
+    assert iv0.overlap_size(iv8) == 0  # overlap at points
+    assert iv0.overlap_size(iv9) == 0  # not overlap
 
 
 def test_interval_overlap_interval():
     assert iv0.overlaps(iv0)
     assert not iv0.overlaps(iv1)
-    assert not iv0.overlaps(iv2)
+    assert iv0.overlaps(iv2)
     assert iv0.overlaps(iv3)
     assert iv0.overlaps(iv4)
+
     assert iv0.overlaps(iv5)
     assert iv0.overlaps(iv6)
     assert iv0.overlaps(iv7)
-    assert not iv0.overlaps(iv8)
+    assert iv0.overlaps(iv8)
     assert not iv0.overlaps(iv9)
 
 
@@ -112,4 +113,5 @@ def test_distance_to_point():
 
 if __name__ == "__main__":
     import pytest
-    pytest.main([__file__, '-v'])
+
+    pytest.main([__file__, "-v"])

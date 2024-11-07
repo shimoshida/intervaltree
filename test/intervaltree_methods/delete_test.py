@@ -18,14 +18,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
+
 from __future__ import absolute_import
 from intervaltree import Interval, IntervalTree
 import pytest
 from test import data, match
-try:
-    import cPickle as pickle
-except ImportError:
-    import pickle
 
 
 def test_delete():
@@ -49,13 +46,14 @@ def test_delete():
     t.discard(Interval(500, 1000, "Doesn't exist"))
     assert orig == t.print_structure(True)
 
-    assert match.set_data(t[14]) == set(['[8,15)', '[14,15)'])
-    t.remove(Interval(14, 15, '[14,15)'))
-    assert match.set_data(t[14]) == set(['[8,15)'])
+    overlapped_point = 15
+    assert match.set_data(t[overlapped_point]) == set(["[8,15)", "[14,15)"])
+    t.remove(Interval(14, 15, "[14,15)"))
+    assert match.set_data(t[overlapped_point]) == set(["[8,15)"])
     t.verify()
 
-    t.discard(Interval(8, 15, '[8,15)'))
-    assert match.set_data(t[14]) == set()
+    t.discard(Interval(8, 15, "[8,15)"))
+    assert match.set_data(t[overlapped_point]) == set()
     t.verify()
 
     assert t[5]
@@ -81,10 +79,10 @@ def test_removei():
     assert len(t) == oldlen
 
     # Should remove existing member
-    assert Interval(1, 2, '[1,2)') in t
-    t.removei(1, 2, '[1,2)')
+    assert Interval(1, 2, "[1,2)") in t
+    t.removei(1, 2, "[1,2)")
     assert len(t) == oldlen - 1
-    assert Interval(1, 2, '[1,2)') not in t
+    assert Interval(1, 2, "[1,2)") not in t
 
 
 def test_discardi():
@@ -102,10 +100,10 @@ def test_discardi():
     assert len(t) == oldlen
 
     # Should discard existing member
-    assert Interval(1, 2, '[1,2)') in t
-    t.discardi(1, 2, '[1,2)')
+    assert Interval(1, 2, "[1,2)") in t
+    t.discardi(1, 2, "[1,2)")
     assert len(t) == oldlen - 1
-    assert Interval(1, 2, '[1,2)') not in t
+    assert Interval(1, 2, "[1,2)") not in t
 
 
 def test_emptying_iteration():
@@ -132,4 +130,4 @@ def test_emptying_clear():
 
 
 if __name__ == "__main__":
-    pytest.main([__file__, '-v'])
+    pytest.main([__file__, "-v"])

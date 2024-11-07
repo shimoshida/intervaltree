@@ -29,7 +29,7 @@ def test_interval_overlaps_point():
     assert not iv.overlaps(-5)
     assert iv.overlaps(0)
     assert iv.overlaps(5)
-    assert not iv.overlaps(10)
+    assert iv.overlaps(10)
     assert not iv.overlaps(15)
 
 
@@ -47,24 +47,24 @@ def test_interval_overlaps_range():
 
     assert iv0.overlaps(*iv0[0:1])
     assert not iv0.overlaps(*iv1)
-    assert not iv0.overlaps(*iv2)
+    assert iv0.overlaps(*iv2)
     assert iv0.overlaps(*iv3)
     assert iv0.overlaps(*iv4)
     assert iv0.overlaps(*iv5)
     assert iv0.overlaps(*iv6)
     assert iv0.overlaps(*iv7)
-    assert not iv0.overlaps(*iv8)
+    assert iv0.overlaps(*iv8)
     assert not iv0.overlaps(*iv9)
 
     assert iv0.overlaps(Interval(*iv0))
     assert not iv0.overlaps(Interval(*iv1))
-    assert not iv0.overlaps(Interval(*iv2))
+    assert iv0.overlaps(Interval(*iv2))
     assert iv0.overlaps(Interval(*iv3))
     assert iv0.overlaps(Interval(*iv4))
     assert iv0.overlaps(Interval(*iv5))
     assert iv0.overlaps(Interval(*iv6))
     assert iv0.overlaps(Interval(*iv7))
-    assert not iv0.overlaps(Interval(*iv8))
+    assert iv0.overlaps(Interval(*iv8))
     assert not iv0.overlaps(Interval(*iv9))
 
 
@@ -74,30 +74,30 @@ def test_interval_int_comparison_operators():
     """
     iv = Interval(0, 10)
 
-    assert (iv > -5)
-    assert (-5 < iv)
+    assert iv > -5
+    assert -5 < iv
     assert not (iv < -5)
     assert not (-5 > iv)
 
-    assert (iv > 0)  # special for sorting
-    assert (0 < iv)  # special for sorting
+    assert iv > 0  # special for sorting
+    assert 0 < iv  # special for sorting
     assert not (iv < 0)
     assert not (0 > iv)
 
     assert not (iv > 5)
     assert not (5 < iv)
-    assert (iv < 5)  # special for sorting
-    assert (5 > iv)  # special for sorting
+    assert iv < 5  # special for sorting
+    assert 5 > iv  # special for sorting
 
     assert not (iv > 10)
     assert not (10 < iv)
-    assert (iv < 10)
-    assert (10 > iv)
+    assert iv < 10
+    assert 10 > iv
 
     assert not (iv > 15)
     assert not (15 < iv)
-    assert (iv < 15)
-    assert (15 > iv)
+    assert iv < 15
+    assert 15 > iv
 
 
 def test_interval_int_comparison_methods():
@@ -200,28 +200,28 @@ def test_interval_null_interval_comparison_methods():
     """
     iv0 = Interval(0, 10)
     ivn = Interval(0, 0)
-    
+
     with pytest.raises(ValueError):
         iv0.gt(ivn)
-    
+
     with pytest.raises(ValueError):
         ivn.gt(iv0)
 
     with pytest.raises(ValueError):
         iv0.ge(ivn)
-    
+
     with pytest.raises(ValueError):
         ivn.ge(iv0)
 
     with pytest.raises(ValueError):
         iv0.lt(ivn)
-    
+
     with pytest.raises(ValueError):
         ivn.lt(iv0)
 
     with pytest.raises(ValueError):
         iv0.le(ivn)
-    
+
     with pytest.raises(ValueError):
         ivn.le(iv0)
 
@@ -290,4 +290,5 @@ def test_interval_sort_interval():
 
 if __name__ == "__main__":
     import pytest
-    pytest.main([__file__, '-v'])
+
+    pytest.main([__file__, "-v"])

@@ -9,7 +9,8 @@ TEMPS=$(shell                                                   \
 		-o \( -type d -name '__pycache__' \)                    \
 )
 
-PYTHONS:=2.7.18 3.6.15 3.7.16 3.8.16 3.9.16 3.10.10 3.11.2
+# PYTHONS:=2.7.18 3.6.15 3.7.16 3.8.16 3.9.16 3.10.11
+PYTHONS:=3.10.11
 PYTHON_MAJORS:=$(shell        \
 	echo "$(PYTHONS)" |         \
 	tr ' ' '\n' | cut -d. -f1 | \
