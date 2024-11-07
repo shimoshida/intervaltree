@@ -11,7 +11,7 @@ Installing
 ----------
 
 ```sh
-pip install intervaltree
+pip install git+https://github.com/shimoshida/intervaltree.git
 ```
 
 Features
